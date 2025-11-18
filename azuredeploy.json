@@ -4,7 +4,7 @@
   "parameters": {
     "containerAppName": {
       "type": "string",
-      "defaultValue": "crawlee-api"
+      "defaultValue": "apm-crawlee-api"
     },
     "location": {
       "type": "string",
@@ -21,7 +21,7 @@
       "properties": {
         "siteConfig": {
           "appCommandLine": "",
-          "linuxFxVersion": "DOCKER|mcr.microsoft.com/devcontainers/python:3.11"
+          "linuxFxVersion": "DOCKER|tarikacr.azurecr.io/crawlee-api:latest"
         },
         "httpsOnly": true
       }
