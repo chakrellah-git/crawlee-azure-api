@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerAppName": {
+      "type": "string",
+      "defaultValue": "crawlee-api"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('containerAppName')]",
+      "location": "[parameters('location')]",
+      "kind": "app,linux",
+      "properties": {
+        "siteConfig": {
+          "appCommandLine": "",
+          "linuxFxVersion": "DOCKER|mcr.microsoft.com/devcontainers/python:3.11"
+        },
+        "httpsOnly": true
+      }
+    }
+  ]
+}
