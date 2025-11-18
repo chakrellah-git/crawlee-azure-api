@@ -13,15 +13,34 @@
   },
   "resources": [
     {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-03-01",
+      "name": "[concat(parameters('containerAppName'), '-plan')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic",
+        "size": "B1"
+      },
+      "kind": "linux",
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2022-03-01",
       "name": "[parameters('containerAppName')]",
       "location": "[parameters('location')]",
-      "kind": "app,linux",
+      "kind": "app,linux,container",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', concat(parameters('containerAppName'), '-plan'))]"
+      ],
       "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('containerAppName'), '-plan'))]",
         "siteConfig": {
-          "appCommandLine": "",
-          "linuxFxVersion": "DOCKER|tarikacr.azurecr.io/crawlee-api:latest"
+          "linuxFxVersion": "DOCKER|tarikacr.azurecr.io/crawlee-api:latest",
+          "appCommandLine": ""
         },
         "httpsOnly": true
       }
